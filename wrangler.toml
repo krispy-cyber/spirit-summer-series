@@ -5,7 +5,8 @@ compatibility_date = "2024-08-27"
 
 workers_dev = false
 routes = [ 
-  { pattern = "spirit-summer-series.mycyberadvantage.com.au", zone_name = "mycyberadvantage.com.au" }
+  { pattern = "spirit-summer-series.mycyberadvantage.com.au", zone_name = "mycyberadvantage.com.au" },
+  { pattern = "spirit-summer-series.mycyberadvantage.com.au/*", zone_name = "mycyberadvantage.com.au" }
 ]
 
 r2_buckets  = [
