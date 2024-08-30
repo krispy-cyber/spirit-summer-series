@@ -17,32 +17,48 @@ export default {
       return new Response(generateQuestionnaireHTML(questionnaireData), {
         headers: { 'Content-Type': 'text/html' },
       });
-    } else if (url.pathname === '/summer-series-logo.jpeg') {
-      try {
-        // Fetch the image file from R2
-        const imageObject = await env.BUCKET.get('summer-series-logo.jpeg');
-        if (!imageObject) {
-          console.log('Image not found in R2 bucket.');
-          return new Response('Error: Image file not found in R2 bucket.', { status: 404 });
-        }
-
-        console.log('Successfully fetched summer-series-logo.jpeg from R2.');
-
-        // Serve the image file with the correct MIME type
-        return new Response(imageObject.body, {
-          headers: { 'Content-Type': 'image/jpeg' },
-        });
-      } catch (error) {
-        console.log('Error fetching image from R2:', error);
-        return new Response('Error fetching image from R2 bucket.', { status: 522 });
-      }
-    } else {
+    } 
+    // Handle requests for AU.png
+    else if (url.pathname === '/AU.png') {
+      console.log('Handling request for AU.png');
+      return fetchImageFromR2(env, 'AU.png', 'image/png');
+    } 
+    // Handle requests for summer-series-logo.jpeg
+    else if (url.pathname === '/summer-series-logo.jpeg') {
+      console.log('Handling request for summer-series-logo.jpeg');
+      return fetchImageFromR2(env, 'summer-series-logo.jpeg', 'image/jpeg');
+    } 
+    // Fallback for any other path
+    else {
       console.log(`Path not found: ${url.pathname}`);
       return new Response('Not found', { status: 404 });
     }
   },
 };
 
+// Helper function to fetch image from R2 and return the response
+async function fetchImageFromR2(env, key, contentType) {
+  try {
+    // Fetch the image file from R2 using the bucket binding
+    const imageObject = await env.BUCKET.get(key);
+    if (!imageObject) {
+      console.log(`Image "${key}" not found in R2 bucket.`);
+      return new Response(`Error: Image "${key}" file not found in R2 bucket.`, { status: 404 });
+    }
+
+    console.log(`Successfully fetched ${key} from R2.`);
+
+    // Serve the image file with the correct MIME type
+    return new Response(imageObject.body, {
+      headers: { 'Content-Type': contentType },
+    });
+  } catch (error) {
+    console.log(`Error fetching image ${key} from R2:`, error);
+    return new Response(`Error fetching image "${key}" from R2 bucket.`, { status: 522 });
+  }
+}
+
+// Function to generate the questionnaire HTML
 function generateQuestionnaireHTML(data) {
   const heading = data.heading; // Get the heading from JSON
   const questions = data.questions;
