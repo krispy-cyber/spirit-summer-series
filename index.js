@@ -1,6 +1,7 @@
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+    console.log(`Request received for path: ${url.pathname}`);  // Log the requested path
 
     if (url.pathname === '/') {
       // Fetch the JSON file from R2 using the bucket binding
@@ -17,8 +18,8 @@ export default {
         headers: { 'Content-Type': 'text/html' },
       });
     } else if (url.pathname === '/summer-series-logo.jpeg') {
-      // Fetch the image file from R2
       try {
+        // Fetch the image file from R2
         const imageObject = await env.BUCKET.get('summer-series-logo.jpeg');
         if (!imageObject) {
           console.log('Image not found in R2 bucket.');
@@ -37,13 +38,11 @@ export default {
       }
     } else {
       console.log(`Path not found: ${url.pathname}`);
+      return new Response('Not found', { status: 404 });
     }
-
-    return new Response('Not found', { status: 404 });
   },
 };
 
-// Function to generate the questionnaire HTML (make sure this function is defined)
 function generateQuestionnaireHTML(data) {
   const heading = data.heading; // Get the heading from JSON
   const questions = data.questions;
