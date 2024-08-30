@@ -158,7 +158,7 @@ function generateQuestionnaireHTML() {
               <h3>Choose your preferred option:</h3>
               <div class="options">
                 <a href="https://shop.nwsf.com.au/product/nwsf-summer-academy/54?cp=true&sa=false&sbp=false&q=false&category_id=10">
-                  <button>Group Training (NWSF Summer Academy)</button>
+                  <button>NWSF Summer Academy</button>
                 </a>
                 <a href="#">
                   <button>NWSF Summer Academy with additional personalised sessions (Link Pending)</button>
