@@ -18,13 +18,16 @@ export default {
       // Fetch the image file from R2
       const imageObject = await env.BUCKET.get('summer-series-logo.jpeg');
       if (!imageObject) {
+        console.log('Image not found in R2 bucket.');
         return new Response('Error: Image file not found in R2 bucket.', { status: 404 });
       }
 
-      // Serve the image file
+      // Serve the image file with correct MIME type
       return new Response(imageObject.body, {
         headers: { 'Content-Type': 'image/jpeg' },
       });
+    } else {
+      console.log(`Path not found: ${url.pathname}`);
     }
 
     return new Response('Not found', { status: 404 });
@@ -132,7 +135,7 @@ function generateQuestionnaireHTML(data) {
     <body>
       <div class="questionnaire">
         <div class="header-strip">
-          <img src="/summer-series-logo.jpeg" alt="Logo" /> <!-- Add image source to the R2 path -->
+          <img src="/summer-series-logo.jpeg" alt="Logo" /> <!-- Corrected image path -->
           <div class="heading">${heading}</div>
         </div>
         <div id="question-container"></div>
