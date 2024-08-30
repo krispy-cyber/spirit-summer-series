@@ -28,6 +28,7 @@ function generateQuestionnaireHTML() {
         .question { margin-bottom: 20px; }
         .options { margin-top: 10px; }
         .options button { margin-right: 10px; padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        .options a { text-decoration: none; }
       </style>
       <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -45,26 +46,55 @@ function generateQuestionnaireHTML() {
           let optionsHTML = '';
 
           if (answer === 'Yes') {
-            optionsHTML = '<button onclick="selectProgram(\\'Program A\\')">Program A</button>' +
-                          '<button onclick="selectProgram(\\'Program B\\')">Program B</button>';
+            optionsHTML = `
+              <div class="question"><h3>Do you want group training, personalized training, or both?</h3></div>
+              <div class="options">
+                <button onclick="showOptions('Group Training')">Group Training</button>
+                <button onclick="showOptions('Personalized Training')">Personalized Training</button>
+                <button onclick="showOptions('Both')">Both</button>
+              </div>
+            `;
           } else if (answer === 'No') {
-            optionsHTML = '<button onclick="selectProgram(\\'Program C\\')">Program C</button>' +
-                          '<button onclick="selectProgram(\\'Program D\\')">Program D</button>';
+            optionsHTML = '<p>Options for non-players in 2024 will be displayed here.</p>';
           }
 
-          questionContainer.innerHTML = '<div class="question"><h3>Choose your program:</h3></div><div class="options">' + optionsHTML + '</div>';
-
-          // Attach event listeners to dynamically created buttons
-          document.querySelectorAll('.options button').forEach(function (button) {
-            button.addEventListener('click', function () {
-              selectProgram(button.textContent);
-            });
-          });
+          questionContainer.innerHTML = optionsHTML;
         }
 
-        function selectProgram(program) {
-          alert('You selected ' + program + '!');
-          // Here you can add code to handle the program selection, such as sending it to a backend or displaying more information.
+        function showOptions(trainingType) {
+          const questionContainer = document.getElementById('question-container');
+          let optionsHTML = '';
+
+          if (trainingType === 'Group Training') {
+            optionsHTML = `
+              <div class="question"><h3>Group Training Option:</h3></div>
+              <div class="options">
+                <a href="https://shop.nwsf.com.au/product/spirit-fc-summer-squads/57?cp=true&sa=false&sbp=false&q=false&category_id=10" target="_blank">
+                  <button>Spirit FC Summer Squads</button>
+                </a>
+              </div>
+            `;
+          } else if (trainingType === 'Personalized Training') {
+            optionsHTML = `
+              <div class="question"><h3>Personalized Training Option:</h3></div>
+              <div class="options">
+                <a href="https://shop.nwsf.com.au/product/spirit-fc-summer-x-factor/52?cp=true&sa=false&sbp=false&q=false&category_id=10" target="_blank">
+                  <button>Spirit FC Summer X-Factor</button>
+                </a>
+              </div>
+            `;
+          } else if (trainingType === 'Both') {
+            optionsHTML = `
+              <div class="question"><h3>Combined Training Option:</h3></div>
+              <div class="options">
+                <a href="#" target="_blank">
+                  <button>Spirit FC Summer Squads with X-Factor (Link Pending)</button>
+                </a>
+              </div>
+            `;
+          }
+
+          questionContainer.innerHTML = optionsHTML;
         }
       </script>
     </head>
