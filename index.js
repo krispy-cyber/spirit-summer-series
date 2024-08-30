@@ -3,10 +3,13 @@ export default {
     const url = new URL(request.url);
 
     if (url.pathname === '/') {
-      // Fetch the JSON file from R2
-      const jsonUrl = `https://<your-r2-bucket>.r2.dev/questions.json`;
-      const response = await fetch(jsonUrl);
-      const questionnaireData = await response.json();
+      // Fetch the JSON file from R2 using the bucket binding
+      const object = await env.BUCKET.get('questions.json');
+      if (!object) {
+        return new Response('Error: Questions file not found in R2 bucket.', { status: 404 });
+      }
+      
+      const questionnaireData = await object.json();
 
       return new Response(generateQuestionnaireHTML(questionnaireData), {
         headers: { 'Content-Type': 'text/html' },
