@@ -53,14 +53,41 @@
     }
   ],
   "options": {
-    "O1": "https://shop.nwsf.com.au/product/spirit-fc-summer-squads/57?cp=true&sa=false&sbp=false&q=false&category_id=10",
-    "O2": "https://shop.nwsf.com.au/product/spirit-fc-summer-x-factor/52?cp=true&sa=false&sbp=false&q=false&category_id=10",
-    "O3": "Link Pending",
-    "O4": "https://shop.nwsf.com.au/product/nwsf-summer-pre-academy/59?cp=true&sa=false&sbp=false&q=false&category_id=10",
-    "O5": "https://shop.nwsf.com.au/product/nwsf-summer-academy/54?cp=true&sa=false&sbp=false&q=false&category_id=10",
-    "O6": "https://shop.nwsf.com.au/product/nwsf-academy-x-factor/55?cp=true&sa=false&sbp=false&q=false&category_id=10",
-    "O7": "Link Pending",
-    "O8": "https://shop.nwsf.com.au/product/nwsf-summer-academy/54?cp=true&sa=false&sbp=false&q=false&category_id=10",
-    "O9": "Link Pending"
+    "O1": {
+      "link": "https://shop.nwsf.com.au/product/spirit-fc-summer-squads/57?cp=true&sa=false&sbp=false&q=false&category_id=10",
+      "text": "Spirit FC Summer Squads"
+    },
+    "O2": {
+      "link": "https://shop.nwsf.com.au/product/spirit-fc-summer-x-factor/52?cp=true&sa=false&sbp=false&q=false&category_id=10",
+      "text": "Spirit FC Summer X-Factor"
+    },
+    "O3": {
+      "link": "Link Pending",
+      "text": "Spirit FC Summer Squads with X-Factor"
+    },
+    "O4": {
+      "link": "https://shop.nwsf.com.au/product/nwsf-summer-pre-academy/59?cp=true&sa=false&sbp=false&q=false&category_id=10",
+      "text": "NWSF Summer Pre-Academy"
+    },
+    "O5": {
+      "link": "https://shop.nwsf.com.au/product/nwsf-summer-academy/54?cp=true&sa=false&sbp=false&q=false&category_id=10",
+      "text": "NWSF Summer Academy"
+    },
+    "O6": {
+      "link": "https://shop.nwsf.com.au/product/nwsf-academy-x-factor/55?cp=true&sa=false&sbp=false&q=false&category_id=10",
+      "text": "NWSF Academy X-Factor"
+    },
+    "O7": {
+      "link": "Link Pending",
+      "text": "NWSF Summer Academy with X-Factor"
+    },
+    "O8": {
+      "link": "https://shop.nwsf.com.au/product/nwsf-summer-academy/54?cp=true&sa=false&sbp=false&q=false&category_id=10",
+      "text": "NWSF Summer Academy"
+    },
+    "O9": {
+      "link": "Link Pending",
+      "text": "NWSF Summer Academy with additional personalised sessions"
+    }
   }
 }
