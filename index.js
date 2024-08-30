@@ -129,10 +129,10 @@ function generateQuestionnaireHTML(data) {
           showNavigation();
         }
 
-        function getOptionHTML(link) {
+        function getOptionHTML(option) {
           return '<div class="question"><h3>Selected Option:</h3></div>' +
             '<div class="options">' +
-              '<a href="' + link + '" target="_self"><button>' + (link.includes('http') ? 'Go to Option' : link) + '</button></a>' +
+              '<a href="' + option.link + '" target="_self"><button>' + option.text + '</button></a>' +
             '</div>';
         }
 
