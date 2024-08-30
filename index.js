@@ -18,11 +18,6 @@ export default {
         headers: { 'Content-Type': 'text/html' },
       });
     } 
-    // Handle requests for AU.png
-    else if (url.pathname === '/AU.png') {
-      console.log('Handling request for AU.png');
-      return fetchImageFromR2(env, 'AU.png', 'image/png');
-    } 
     // Handle requests for summer-series-logo.jpeg
     else if (url.pathname === '/summer-series-logo.jpeg') {
       console.log('Handling request for summer-series-logo.jpeg');
