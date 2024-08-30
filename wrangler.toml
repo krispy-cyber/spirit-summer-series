@@ -1,0 +1,9 @@
+# Top-level configuration
+name = "spirit-summer-series"
+main = "./index.js"
+compatibility_date = "2024-08-27"
+
+workers_dev = false
+routes = [ 
+  { pattern = "spirit-summer-series.mycyberadvantage.com.au", zone_name = "mycyberadvantage.com.au" }
+]
