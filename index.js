@@ -1,3 +1,58 @@
+export default {
+  async fetch(request, env) {
+    const url = new URL(request.url);
+    console.log(`Request received for path: ${url.pathname}`);  // Log the requested path
+
+    if (url.pathname === '/') {
+      // Fetch the JSON file from R2 using the bucket binding
+      const object = await env.BUCKET.get('questions.json');
+      if (!object) {
+        console.log('Questions JSON not found in R2 bucket.');
+        return new Response('Error: Questions file not found in R2 bucket.', { status: 404 });
+      }
+
+      const questionnaireData = await object.json();
+      console.log('Successfully fetched questions.json from R2.');
+
+      return new Response(generateQuestionnaireHTML(questionnaireData), {
+        headers: { 'Content-Type': 'text/html' },
+      });
+    } 
+    // Handle requests for summer-series-logo.jpeg
+    else if (url.pathname === '/summer-series-logo.jpeg') {
+      console.log('Handling request for summer-series-logo.jpeg');
+      return fetchImageFromR2(env, 'summer-series-logo.jpeg', 'image/jpeg');
+    } 
+    // Fallback for any other path
+    else {
+      console.log(`Path not found: ${url.pathname}`);
+      return new Response('Not found', { status: 404 });
+    }
+  },
+};
+
+// Helper function to fetch image from R2 and return the response
+async function fetchImageFromR2(env, key, contentType) {
+  try {
+    // Fetch the image file from R2 using the bucket binding
+    const imageObject = await env.BUCKET.get(key);
+    if (!imageObject) {
+      console.log(`Image "${key}" not found in R2 bucket.`);
+      return new Response(`Error: Image "${key}" file not found in R2 bucket.`, { status: 404 });
+    }
+
+    console.log(`Successfully fetched ${key} from R2.`);
+
+    // Serve the image file with the correct MIME type
+    return new Response(imageObject.body, {
+      headers: { 'Content-Type': contentType },
+    });
+  } catch (error) {
+    console.log(`Error fetching image ${key} from R2:`, error);
+    return new Response(`Error fetching image "${key}" from R2 bucket.`, { status: 522 });
+  }
+}
+
 // Function to generate the questionnaire HTML
 function generateQuestionnaireHTML(data) {
   const heading = data.heading; // Get the heading from JSON
@@ -43,6 +98,73 @@ function generateQuestionnaireHTML(data) {
           questionContainer.innerHTML = getQuestionHTML(questionData);
           showNavigation();
         }
+
+        function getQuestionHTML(questionData) {
+          return '<div class="question">' +
+            '<h3>' + questionData.question + '</h3>' +
+            '<div class="options">' +
+              questionData.options.map(option => 
+                '<button onclick="handleAnswer(\\'' + option.next + '\\')">' + option.answer + '</button>'
+              ).join('') +
+            '</div>' +
+          '</div>';
+        }
+
+        function handleAnswer(nextQuestionId) {
+          // Save the current question ID to history stack
+          historyStack.push(currentQuestionId);
+
+          if (options[nextQuestionId]) {
+            showOption(nextQuestionId);
+          } else {
+            currentQuestionId = nextQuestionId; // Update the current question ID
+            renderQuestion(nextQuestionId);
+          }
+        }
+
+        function showOption(optionId) {
+          const questionContainer = document.getElementById('question-container');
+          const link = options[optionId];
+
+          questionContainer.innerHTML = getOptionHTML(link);
+          showNavigation();
+        }
+
+        function getOptionHTML(link) {
+          return '<div class="question"><h3>Selected Option:</h3></div>' +
+            '<div class="options">' +
+              '<a href="' + link + '" target="_self"><button>' + (link.includes('http') ? 'Go to Option' : link) + '</button></a>' +
+            '</div>';
+        }
+
+        function showNavigation() {
+          const questionContainer = document.getElementById('question-container');
+          const navHTML = '<div class="navigation"><button onclick="goBack()">Back to Last Question</button></div>';
+          questionContainer.innerHTML += navHTML;
+        }
+
+        function goBack() {
+          if (historyStack.length > 0) {
+            const lastQuestionId = historyStack.pop(); // Get the last question ID from the stack
+            currentQuestionId = lastQuestionId; // Update the current question ID
+            renderQuestion(lastQuestionId);
+          }
+        }
+      </script>
+    </head>
+    <body>
+      <div class="questionnaire">
+        <div class="header-strip">
+          <img src="/summer-series-logo.jpeg" alt="Logo" /> <!-- Corrected image path -->
+          <div class="heading">${heading}</div>
+        </div>
+        <div id="question-container"></div>
+      </div>
+    </body>
+    </html>
+  `;
+}
+
 
         function getQuestionHTML(questionData) {
           return '<div class="question">' +
