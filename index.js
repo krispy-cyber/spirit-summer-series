@@ -46,14 +46,14 @@ function generateQuestionnaireHTML() {
           let optionsHTML = '';
 
           if (answer === 'Yes') {
-            optionsHTML = `
+            optionsHTML = \`
               <div class="question"><h3>Do you want group training, personalized training, or both?</h3></div>
               <div class="options">
                 <button onclick="showOptions('Group Training')">Group Training</button>
                 <button onclick="showOptions('Personalized Training')">Personalized Training</button>
                 <button onclick="showOptions('Both')">Both</button>
               </div>
-            `;
+            \`;
           } else if (answer === 'No') {
             optionsHTML = '<p>Options for non-players in 2024 will be displayed here.</p>';
           }
@@ -66,32 +66,32 @@ function generateQuestionnaireHTML() {
           let optionsHTML = '';
 
           if (trainingType === 'Group Training') {
-            optionsHTML = `
+            optionsHTML = \`
               <div class="question"><h3>Group Training Option:</h3></div>
               <div class="options">
                 <a href="https://shop.nwsf.com.au/product/spirit-fc-summer-squads/57?cp=true&sa=false&sbp=false&q=false&category_id=10" target="_blank">
                   <button>Spirit FC Summer Squads</button>
                 </a>
               </div>
-            `;
+            \`;
           } else if (trainingType === 'Personalized Training') {
-            optionsHTML = `
+            optionsHTML = \`
               <div class="question"><h3>Personalized Training Option:</h3></div>
               <div class="options">
                 <a href="https://shop.nwsf.com.au/product/spirit-fc-summer-x-factor/52?cp=true&sa=false&sbp=false&q=false&category_id=10" target="_blank">
                   <button>Spirit FC Summer X-Factor</button>
                 </a>
               </div>
-            `;
+            \`;
           } else if (trainingType === 'Both') {
-            optionsHTML = `
+            optionsHTML = \`
               <div class="question"><h3>Combined Training Option:</h3></div>
               <div class="options">
                 <a href="#" target="_blank">
                   <button>Spirit FC Summer Squads with X-Factor (Link Pending)</button>
                 </a>
               </div>
-            `;
+            \`;
           }
 
           questionContainer.innerHTML = optionsHTML;
