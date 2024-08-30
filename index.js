@@ -29,39 +29,67 @@ function generateQuestionnaireHTML() {
         .options { margin-top: 10px; }
         .options button { margin-right: 10px; padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
         .options a { text-decoration: none; }
+        .navigation { margin-top: 20px; }
+        .selections { margin-top: 20px; font-weight: bold; }
       </style>
       <script>
+        // Track user selections
+        let selections = {
+          q1: null,
+          q2: null
+        };
+
         document.addEventListener('DOMContentLoaded', function () {
-          // Attach event listeners to the initial buttons
-          document.getElementById('yes-button').addEventListener('click', function () {
-            handleAnswer('Yes');
-          });
-          document.getElementById('no-button').addEventListener('click', function () {
-            handleAnswer('No');
-          });
+          showQuestion1(); // Start with Question 1
         });
 
-        function handleAnswer(answer) {
+        function showQuestion1() {
           const questionContainer = document.getElementById('question-container');
-          let optionsHTML = '';
+          questionContainer.innerHTML = \`
+            <div class="question">
+              <h3>Were you a NWSF AYL or Spirit FC player in 2024?</h3>
+              <div class="options">
+                <button onclick="handleAnswer('Yes')">Yes</button>
+                <button onclick="handleAnswer('No')">No</button>
+              </div>
+            </div>
+            <div class="navigation"></div>
+            <div class="selections" id="selections-display"></div>
+          \`;
+          displaySelections();
+        }
 
+        function handleAnswer(answer) {
+          selections.q1 = answer;
           if (answer === 'Yes') {
-            optionsHTML = \`
-              <div class="question"><h3>Do you want group training, personalized training, or both?</h3></div>
+            showQuestion2();
+          } else if (answer === 'No') {
+            document.getElementById('question-container').innerHTML = '<p>Options for non-players in 2024 will be displayed here.</p>';
+            displaySelections();
+          }
+        }
+
+        function showQuestion2() {
+          const questionContainer = document.getElementById('question-container');
+          questionContainer.innerHTML = \`
+            <div class="question">
+              <h3>Do you want group training, personalized training, or both?</h3>
               <div class="options">
                 <button onclick="showOptions('Group Training')">Group Training</button>
                 <button onclick="showOptions('Personalized Training')">Personalized Training</button>
                 <button onclick="showOptions('Both')">Both</button>
               </div>
-            \`;
-          } else if (answer === 'No') {
-            optionsHTML = '<p>Options for non-players in 2024 will be displayed here.</p>';
-          }
-
-          questionContainer.innerHTML = optionsHTML;
+            </div>
+            <div class="navigation">
+              <button onclick="goBackToQuestion1()">Back to Question 1</button>
+            </div>
+            <div class="selections" id="selections-display"></div>
+          \`;
+          displaySelections();
         }
 
         function showOptions(trainingType) {
+          selections.q2 = trainingType;
           const questionContainer = document.getElementById('question-container');
           let optionsHTML = '';
 
@@ -94,21 +122,36 @@ function generateQuestionnaireHTML() {
             \`;
           }
 
+          optionsHTML += \`
+            <div class="navigation">
+              <button onclick="showQuestion2()">Back to Question 2</button>
+            </div>
+          \`;
+
           questionContainer.innerHTML = optionsHTML;
+          displaySelections();
+        }
+
+        function goBackToQuestion1() {
+          selections.q2 = null;  // Reset selections when going back
+          showQuestion1();
+        }
+
+        function displaySelections() {
+          const selectionsDisplay = document.getElementById('selections-display');
+          selectionsDisplay.innerHTML = \`
+            Selected Options: 
+            <ul>
+              <li>Question 1: \${selections.q1 || 'Not answered yet'}</li>
+              <li>Question 2: \${selections.q2 || 'Not answered yet'}</li>
+            </ul>
+          \`;
         }
       </script>
     </head>
     <body>
       <div class="questionnaire">
-        <div id="question-container">
-          <div class="question">
-            <h3>Were you a NWSF AYL or Spirit FC player in 2024?</h3>
-            <div class="options">
-              <button id="yes-button">Yes</button>
-              <button id="no-button">No</button>
-            </div>
-          </div>
-        </div>
+        <div id="question-container"></div>
       </div>
     </body>
     </html>
