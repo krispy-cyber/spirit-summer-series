@@ -23,21 +23,20 @@ function generateQuestionnaireHTML() {
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Spirit Summer Series Questionnaire</title>
       <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f4f4f4; }
-        .questionnaire { max-width: 600px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #000000; color: #FFFFFF; }
+        .questionnaire { max-width: 600px; margin: 0 auto; background: #000000; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(255, 255, 255, 0.1); }
         .question { margin-bottom: 20px; }
         .options { margin-top: 10px; }
-        .options button { margin-right: 10px; padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        .options button { margin-right: 10px; padding: 10px 20px; background-color: #FFFF00; color: #000000; border: none; border-radius: 5px; cursor: pointer; }
         .options a { text-decoration: none; }
         .navigation { margin-top: 20px; }
-        .selections { margin-top: 20px; font-weight: bold; }
+        .navigation p { color: #FFFFFF; }
+        .navigation button { background-color: #FFFF00; color: #000000; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
       </style>
       <script>
-        // Track user selections
-        let selections = {
-          q1: null,
-          q2: null
-        };
+        // Track the current question
+        let currentQuestion = 1;
+        let lastAnswer = null;
 
         document.addEventListener('DOMContentLoaded', function () {
           showQuestion1(); // Start with Question 1
@@ -53,19 +52,18 @@ function generateQuestionnaireHTML() {
                 <button onclick="handleAnswer('No')">No</button>
               </div>
             </div>
-            <div class="navigation"></div>
-            <div class="selections" id="selections-display"></div>
           \`;
-          displaySelections();
         }
 
         function handleAnswer(answer) {
-          selections.q1 = answer;
+          lastAnswer = answer;
+          currentQuestion = 2;
+
           if (answer === 'Yes') {
             showQuestion2();
           } else if (answer === 'No') {
             document.getElementById('question-container').innerHTML = '<p>Options for non-players in 2024 will be displayed here.</p>';
-            displaySelections();
+            showNavigation();
           }
         }
 
@@ -80,16 +78,12 @@ function generateQuestionnaireHTML() {
                 <button onclick="showOptions('Both')">Both</button>
               </div>
             </div>
-            <div class="navigation">
-              <button onclick="goBackToQuestion1()">Back to Question 1</button>
-            </div>
-            <div class="selections" id="selections-display"></div>
           \`;
-          displaySelections();
+          showNavigation();
         }
 
         function showOptions(trainingType) {
-          selections.q2 = trainingType;
+          lastAnswer = trainingType;
           const questionContainer = document.getElementById('question-container');
           let optionsHTML = '';
 
@@ -122,30 +116,27 @@ function generateQuestionnaireHTML() {
             \`;
           }
 
-          optionsHTML += \`
+          questionContainer.innerHTML = optionsHTML;
+          showNavigation();
+        }
+
+        function showNavigation() {
+          const questionContainer = document.getElementById('question-container');
+          const navHTML = \`
             <div class="navigation">
-              <button onclick="showQuestion2()">Back to Question 2</button>
+              <p>Last Selected: \${lastAnswer}</p>
+              <button onclick="goBack()">Back to Last Question</button>
             </div>
           \`;
-
-          questionContainer.innerHTML = optionsHTML;
-          displaySelections();
+          questionContainer.innerHTML += navHTML;
         }
 
-        function goBackToQuestion1() {
-          selections.q2 = null;  // Reset selections when going back
-          showQuestion1();
-        }
-
-        function displaySelections() {
-          const selectionsDisplay = document.getElementById('selections-display');
-          selectionsDisplay.innerHTML = \`
-            Selected Options: 
-            <ul>
-              <li>Question 1: \${selections.q1 || 'Not answered yet'}</li>
-              <li>Question 2: \${selections.q2 || 'Not answered yet'}</li>
-            </ul>
-          \`;
+        function goBack() {
+          if (currentQuestion === 2) {
+            showQuestion1();
+          } else {
+            showQuestion2();
+          }
         }
       </script>
     </head>
