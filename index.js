@@ -30,19 +30,36 @@ function generateQuestionnaireHTML() {
         .options button { margin-right: 10px; padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
       </style>
       <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          // Attach event listeners to the initial buttons
+          document.getElementById('yes-button').addEventListener('click', function () {
+            handleAnswer('Yes');
+          });
+          document.getElementById('no-button').addEventListener('click', function () {
+            handleAnswer('No');
+          });
+        });
+
         function handleAnswer(answer) {
           const questionContainer = document.getElementById('question-container');
           let optionsHTML = '';
 
           if (answer === 'Yes') {
-            optionsHTML = '<button onclick="selectProgram(\'Program A\')">Program A</button>' +
-                          '<button onclick="selectProgram(\'Program B\')">Program B</button>';
+            optionsHTML = '<button onclick="selectProgram(\\'Program A\\')">Program A</button>' +
+                          '<button onclick="selectProgram(\\'Program B\\')">Program B</button>';
           } else if (answer === 'No') {
-            optionsHTML = '<button onclick="selectProgram(\'Program C\')">Program C</button>' +
-                          '<button onclick="selectProgram(\'Program D\')">Program D</button>';
+            optionsHTML = '<button onclick="selectProgram(\\'Program C\\')">Program C</button>' +
+                          '<button onclick="selectProgram(\\'Program D\\')">Program D</button>';
           }
 
           questionContainer.innerHTML = '<div class="question"><h3>Choose your program:</h3></div><div class="options">' + optionsHTML + '</div>';
+
+          // Attach event listeners to dynamically created buttons
+          document.querySelectorAll('.options button').forEach(function (button) {
+            button.addEventListener('click', function () {
+              selectProgram(button.textContent);
+            });
+          });
         }
 
         function selectProgram(program) {
@@ -57,8 +74,8 @@ function generateQuestionnaireHTML() {
           <div class="question">
             <h3>Were you a NWSF AYL or Spirit FC player in 2024?</h3>
             <div class="options">
-              <button onclick="handleAnswer('Yes')">Yes</button>
-              <button onclick="handleAnswer('No')">No</button>
+              <button id="yes-button">Yes</button>
+              <button id="no-button">No</button>
             </div>
           </div>
         </div>
