@@ -149,7 +149,7 @@ function generateQuestionnaireHTML() {
           \`;
           showNavigation();
         }
-
+        
         function showNonAcademyOptions() {
           currentQuestion = 4; // Set current question to 4
           const questionContainer = document.getElementById('question-container');
@@ -161,7 +161,7 @@ function generateQuestionnaireHTML() {
                   <button>Group Training (NWSF Summer Academy)</button>
                 </a>
                 <a href="#">
-                  <button>Group Training with additional 1:1 coaching (Link Pending)</button>
+                  <button>NWSF Summer Academy with additional personalised sessions (Link Pending)</button>
                 </a>
               </div>
             </div>
