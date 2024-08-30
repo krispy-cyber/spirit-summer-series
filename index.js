@@ -94,7 +94,7 @@ function generateQuestionnaireHTML() {
             optionsHTML = \`
               <div class="question"><h3>Group Training Option:</h3></div>
               <div class="options">
-                <a href="https://shop.nwsf.com.au/product/spirit-fc-summer-squads/57?cp=true&sa=false&sbp=false&q=false&category_id=10" target="_blank">
+                <a href="https://shop.nwsf.com.au/product/spirit-fc-summer-squads/57?cp=true&sa=false&sbp=false&q=false&category_id=10">
                   <button>Spirit FC Summer Squads</button>
                 </a>
               </div>
@@ -103,7 +103,7 @@ function generateQuestionnaireHTML() {
             optionsHTML = \`
               <div class="question"><h3>Personalized Training Option:</h3></div>
               <div class="options">
-                <a href="https://shop.nwsf.com.au/product/spirit-fc-summer-x-factor/52?cp=true&sa=false&sbp=false&q=false&category_id=10" target="_blank">
+                <a href="https://shop.nwsf.com.au/product/spirit-fc-summer-x-factor/52?cp=true&sa=false&sbp=false&q=false&category_id=10">
                   <button>Spirit FC Summer X-Factor</button>
                 </a>
               </div>
@@ -112,7 +112,7 @@ function generateQuestionnaireHTML() {
             optionsHTML = \`
               <div class="question"><h3>Combined Training Option:</h3></div>
               <div class="options">
-                <a href="#" target="_blank">
+                <a href="#">
                   <button>Spirit FC Summer Squads with X-Factor (Link Pending)</button>
                 </a>
               </div>
