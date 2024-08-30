@@ -47,7 +47,7 @@
       "id": "Q5",
       "question": "Choose preferred option:",
       "options": [
-        { "answer": "Group Training (NWSF Summer Academy)", "next": "O8" },
+        { "answer": "NWSF Summer Academy", "next": "O8" },
         { "answer": "NWSF Summer Academy with additional personalised sessions", "next": "O9" }
       ]
     }
