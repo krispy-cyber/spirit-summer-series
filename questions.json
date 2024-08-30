@@ -1,0 +1,65 @@
+{
+  "questions": [
+    {
+      "id": "Q1",
+      "question": "Were you a NWSF AYL or Spirit FC player in 2024?",
+      "options": [
+        { "answer": "Yes", "next": "Q2a" },
+        { "answer": "No", "next": "Q2b" }
+      ]
+    },
+    {
+      "id": "Q2a",
+      "question": "Do you want group training, personalized training, or both?",
+      "options": [
+        { "answer": "Group Training", "next": "O1" },
+        { "answer": "Personalized Training", "next": "O2" },
+        { "answer": "Both", "next": "O3" }
+      ]
+    },
+    {
+      "id": "Q2b",
+      "question": "Is your player currently 8 years of age or older?",
+      "options": [
+        { "answer": "Yes", "next": "Q3" },
+        { "answer": "No", "next": "O4" }
+      ]
+    },
+    {
+      "id": "Q3",
+      "question": "Did you attend NWS Academy in winter this year?",
+      "options": [
+        { "answer": "Yes", "next": "Q4" },
+        { "answer": "No", "next": "Q5" }
+      ]
+    },
+    {
+      "id": "Q4",
+      "question": "Do you want group training, personalized training, or both?",
+      "options": [
+        { "answer": "Group Training", "next": "O5" },
+        { "answer": "Personalized Training", "next": "O6" },
+        { "answer": "Both", "next": "O7" }
+      ]
+    },
+    {
+      "id": "Q5",
+      "question": "Choose your preferred option:",
+      "options": [
+        { "answer": "Group Training (NWSF Summer Academy)", "next": "O8" },
+        { "answer": "NWSF Summer Academy with additional personalised sessions", "next": "O9" }
+      ]
+    }
+  ],
+  "options": {
+    "O1": "https://shop.nwsf.com.au/product/spirit-fc-summer-squads/57?cp=true&sa=false&sbp=false&q=false&category_id=10",
+    "O2": "https://shop.nwsf.com.au/product/spirit-fc-summer-x-factor/52?cp=true&sa=false&sbp=false&q=false&category_id=10",
+    "O3": "Link Pending",
+    "O4": "https://shop.nwsf.com.au/product/nwsf-summer-pre-academy/59?cp=true&sa=false&sbp=false&q=false&category_id=10",
+    "O5": "https://shop.nwsf.com.au/product/nwsf-summer-academy/54?cp=true&sa=false&sbp=false&q=false&category_id=10",
+    "O6": "https://shop.nwsf.com.au/product/nwsf-academy-x-factor/55?cp=true&sa=false&sbp=false&q=false&category_id=10",
+    "O7": "Link Pending",
+    "O8": "https://shop.nwsf.com.au/product/nwsf-summer-academy/54?cp=true&sa=false&sbp=false&q=false&category_id=10",
+    "O9": "Link Pending"
+  }
+}
