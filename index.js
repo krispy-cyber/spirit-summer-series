@@ -34,10 +34,10 @@ function generateQuestionnaireHTML() {
           const questionContainer = document.getElementById('question-container');
           let optionsHTML = '';
 
-          if (answer === 'Spirit FC') {
+          if (answer === 'Yes') {
             optionsHTML = '<button onclick="selectProgram(\'Program A\')">Program A</button>' +
                           '<button onclick="selectProgram(\'Program B\')">Program B</button>';
-          } else if (answer === 'NWSF') {
+          } else if (answer === 'No') {
             optionsHTML = '<button onclick="selectProgram(\'Program C\')">Program C</button>' +
                           '<button onclick="selectProgram(\'Program D\')">Program D</button>';
           }
@@ -57,8 +57,8 @@ function generateQuestionnaireHTML() {
           <div class="question">
             <h3>Were you a NWSF AYL or Spirit FC player in 2024?</h3>
             <div class="options">
-              <button onclick="handleAnswer('Spirit FC')">Spirit FC</button>
-              <button onclick="handleAnswer('NWSF')">NWSF</button>
+              <button onclick="handleAnswer('Yes')">Yes</button>
+              <button onclick="handleAnswer('No')">No</button>
             </div>
           </div>
         </div>
