@@ -30,7 +30,6 @@ function generateQuestionnaireHTML() {
         .options button { margin-right: 10px; padding: 10px 20px; background-color: #FFFF00; color: #000000; border: none; border-radius: 5px; cursor: pointer; }
         .options a { text-decoration: none; }
         .navigation { margin-top: 20px; }
-        .navigation p { color: #FFFFFF; }
         .navigation button { background-color: #FFFF00; color: #000000; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
       </style>
       <script>
@@ -266,7 +265,6 @@ function generateQuestionnaireHTML() {
           const questionContainer = document.getElementById('question-container');
           const navHTML = \`
             <div class="navigation">
-              <p>Last Selected: \${lastAnswer}</p>
               <button onclick="goBack()">Back to Last Question</button>
             </div>
           \`;
