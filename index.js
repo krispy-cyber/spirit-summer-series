@@ -56,17 +56,19 @@ function generateQuestionnaireHTML(data) {
           const questionData = questions.find(q => q.id === questionId);
           const questionContainer = document.getElementById('question-container');
 
-          questionContainer.innerHTML = `
-            <div class="question">
-              <h3>${questionData.question}</h3>
-              <div class="options">
-                ${questionData.options.map(option => 
-                  '<button onclick="handleAnswer(\\'' + option.next + '\\')">' + option.answer + '</button>'
-                ).join('')}
-              </div>
-            </div>
-          `;
+          questionContainer.innerHTML = getQuestionHTML(questionData);
           showNavigation();
+        }
+
+        function getQuestionHTML(questionData) {
+          return '<div class="question">' +
+            '<h3>' + questionData.question + '</h3>' +
+            '<div class="options">' +
+              questionData.options.map(option => 
+                '<button onclick="handleAnswer(\\'' + option.next + '\\')">' + option.answer + '</button>'
+              ).join('') +
+            '</div>' +
+          '</div>';
         }
 
         function handleAnswer(nextQuestionId) {
@@ -81,22 +83,20 @@ function generateQuestionnaireHTML(data) {
           const questionContainer = document.getElementById('question-container');
           const link = options[optionId];
 
-          questionContainer.innerHTML = `
-            <div class="question"><h3>Selected Option:</h3></div>
-            <div class="options">
-              <a href="${link}" target="_self"><button>${link.includes('http') ? 'Go to Option' : link}</button></a>
-            </div>
-          `;
+          questionContainer.innerHTML = getOptionHTML(link);
           showNavigation();
+        }
+
+        function getOptionHTML(link) {
+          return '<div class="question"><h3>Selected Option:</h3></div>' +
+            '<div class="options">' +
+              '<a href="' + link + '" target="_self"><button>' + (link.includes('http') ? 'Go to Option' : link) + '</button></a>' +
+            '</div>';
         }
 
         function showNavigation() {
           const questionContainer = document.getElementById('question-container');
-          const navHTML = `
-            <div class="navigation">
-              <button onclick="goBack()">Back to Last Question</button>
-            </div>
-          `;
+          const navHTML = '<div class="navigation"><button onclick="goBack()">Back to Last Question</button></div>';
           questionContainer.innerHTML += navHTML;
         }
 
