@@ -8,11 +8,22 @@ export default {
       if (!object) {
         return new Response('Error: Questions file not found in R2 bucket.', { status: 404 });
       }
-      
+
       const questionnaireData = await object.json();
 
       return new Response(generateQuestionnaireHTML(questionnaireData), {
         headers: { 'Content-Type': 'text/html' },
+      });
+    } else if (url.pathname === '/summer-series-logo.jpeg') {
+      // Fetch the image file from R2
+      const imageObject = await env.BUCKET.get('summer-series-logo.jpeg');
+      if (!imageObject) {
+        return new Response('Error: Image file not found in R2 bucket.', { status: 404 });
+      }
+
+      // Serve the image file
+      return new Response(imageObject.body, {
+        headers: { 'Content-Type': 'image/jpeg' },
       });
     }
 
@@ -36,7 +47,9 @@ function generateQuestionnaireHTML(data) {
       <style>
         body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #000000; color: #FFFFFF; }
         .questionnaire { max-width: 600px; margin: 0 auto; background: #000000; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(255, 255, 255, 0.1); }
-        .heading { text-align: center; margin-bottom: 20px; font-size: 24px; font-weight: bold; }
+        .header-strip { display: flex; align-items: center; background-color: #FFFF00; padding: 10px; border-radius: 5px; margin-bottom: 20px; }
+        .header-strip img { height: 60px; width: auto; margin-right: 10px; }
+        .heading { font-size: 24px; font-weight: bold; color: #000000; }
         .question { margin-bottom: 20px; }
         .options { margin-top: 10px; }
         .options button { margin-right: 10px; padding: 10px 20px; background-color: #FFFF00; color: #000000; border: none; border-radius: 5px; cursor: pointer; }
@@ -118,7 +131,10 @@ function generateQuestionnaireHTML(data) {
     </head>
     <body>
       <div class="questionnaire">
-        <div class="heading">${heading}</div> <!-- Add heading here -->
+        <div class="header-strip">
+          <img src="/summer-series-logo.jpeg" alt="Logo" /> <!-- Add image source to the R2 path -->
+          <div class="heading">${heading}</div>
+        </div>
         <div id="question-container"></div>
       </div>
     </body>
