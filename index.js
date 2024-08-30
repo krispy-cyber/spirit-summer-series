@@ -44,6 +44,7 @@ function generateQuestionnaireHTML(data) {
       </style>
       <script>
         let currentQuestionId = 'Q1';
+        let historyStack = []; // Stack to keep track of navigation history
 
         const questions = ${JSON.stringify(questions)};
         const options = ${JSON.stringify(options)};
@@ -72,9 +73,13 @@ function generateQuestionnaireHTML(data) {
         }
 
         function handleAnswer(nextQuestionId) {
+          // Save the current question ID to history stack
+          historyStack.push(currentQuestionId);
+
           if (options[nextQuestionId]) {
             showOption(nextQuestionId);
           } else {
+            currentQuestionId = nextQuestionId; // Update the current question ID
             renderQuestion(nextQuestionId);
           }
         }
@@ -101,7 +106,11 @@ function generateQuestionnaireHTML(data) {
         }
 
         function goBack() {
-          // Implement back navigation logic if necessary
+          if (historyStack.length > 0) {
+            const lastQuestionId = historyStack.pop(); // Get the last question ID from the stack
+            currentQuestionId = lastQuestionId; // Update the current question ID
+            renderQuestion(lastQuestionId);
+          }
         }
       </script>
     </head>
