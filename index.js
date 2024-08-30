@@ -43,6 +43,7 @@ function generateQuestionnaireHTML() {
         });
 
         function showQuestion1() {
+          currentQuestion = 1; // Set current question to 1
           const questionContainer = document.getElementById('question-container');
           questionContainer.innerHTML = \`
             <div class="question">
@@ -57,7 +58,7 @@ function generateQuestionnaireHTML() {
 
         function handleAnswer(answer) {
           lastAnswer = answer;
-          currentQuestion = 2;
+          currentQuestion = 2; // Move to question 2
 
           if (answer === 'Yes') {
             showQuestion2();
@@ -68,6 +69,7 @@ function generateQuestionnaireHTML() {
         }
 
         function showQuestion2() {
+          currentQuestion = 2; // Set current question to 2
           const questionContainer = document.getElementById('question-container');
           questionContainer.innerHTML = \`
             <div class="question">
@@ -133,9 +135,11 @@ function generateQuestionnaireHTML() {
 
         function goBack() {
           if (currentQuestion === 2) {
-            showQuestion1();
+            showQuestion1(); // Go back to Question 1
+          } else if (lastAnswer === 'Yes') {
+            showQuestion2(); // Go back to Question 2
           } else {
-            showQuestion2();
+            showQuestion1(); // Fallback to Question 1
           }
         }
       </script>
