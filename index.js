@@ -34,7 +34,7 @@ function generateQuestionnaireHTML() {
         .navigation button { background-color: #FFFF00; color: #000000; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
       </style>
       <script>
-        // Track the current question
+        // Track the current question and the last answered state
         let currentQuestion = 1;
         let lastAnswer = null;
 
@@ -86,6 +86,7 @@ function generateQuestionnaireHTML() {
 
         function showOptions(trainingType) {
           lastAnswer = trainingType;
+          currentQuestion = 3; // Move to options display (Question 3 equivalent)
           const questionContainer = document.getElementById('question-container');
           let optionsHTML = '';
 
@@ -134,12 +135,10 @@ function generateQuestionnaireHTML() {
         }
 
         function goBack() {
-          if (currentQuestion === 2) {
-            showQuestion1(); // Go back to Question 1
-          } else if (lastAnswer === 'Yes') {
+          if (currentQuestion === 3) {
             showQuestion2(); // Go back to Question 2
-          } else {
-            showQuestion1(); // Fallback to Question 1
+          } else if (currentQuestion === 2) {
+            showQuestion1(); // Go back to Question 1
           }
         }
       </script>
