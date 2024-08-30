@@ -129,11 +129,65 @@ function generateQuestionnaireHTML() {
           const questionContainer = document.getElementById('question-container');
 
           if (answer === 'Yes') {
-            questionContainer.innerHTML = '<p>Options for those who attended the NWS (winter) Academy will be displayed here.</p>';
+            showTrainingOptionsForAcademy();
           } else {
             questionContainer.innerHTML = '<p>Options for those who did NOT attend the NWS (winter) Academy will be displayed here.</p>';
+            showNavigation();
+          }
+        }
+
+        function showTrainingOptionsForAcademy() {
+          currentQuestion = 4; // Set current question to 4
+          const questionContainer = document.getElementById('question-container');
+          questionContainer.innerHTML = \`
+            <div class="question">
+              <h3>Do you want group training, personalized training, or both?</h3>
+              <div class="options">
+                <button onclick="showAcademyOption('Group Training')">Group Training</button>
+                <button onclick="showAcademyOption('Personalized Training')">Personalized Training</button>
+                <button onclick="showAcademyOption('Both')">Both</button>
+              </div>
+            </div>
+          \`;
+          showNavigation();
+        }
+
+        function showAcademyOption(trainingType) {
+          lastAnswer = trainingType;
+          currentQuestion = 5; // Move to options display for academy
+          const questionContainer = document.getElementById('question-container');
+          let optionsHTML = '';
+
+          if (trainingType === 'Group Training') {
+            optionsHTML = \`
+              <div class="question"><h3>NWSF Summer Academy Option:</h3></div>
+              <div class="options">
+                <a href="https://shop.nwsf.com.au/product/nwsf-summer-academy/54?cp=true&sa=false&sbp=false&q=false&category_id=10">
+                  <button>NWSF Summer Academy</button>
+                </a>
+              </div>
+            \`;
+          } else if (trainingType === 'Personalized Training') {
+            optionsHTML = \`
+              <div class="question"><h3>NWSF Academy X-Factor Option:</h3></div>
+              <div class="options">
+                <a href="https://shop.nwsf.com.au/product/nwsf-academy-x-factor/55?cp=true&sa=false&sbp=false&q=false&category_id=10">
+                  <button>NWSF Academy X-Factor</button>
+                </a>
+              </div>
+            \`;
+          } else if (trainingType === 'Both') {
+            optionsHTML = \`
+              <div class="question"><h3>Combined Training Option:</h3></div>
+              <div class="options">
+                <a href="#">
+                  <button>NWSF Summer Academy with X-Factor (Link Pending)</button>
+                </a>
+              </div>
+            \`;
           }
 
+          questionContainer.innerHTML = optionsHTML;
           showNavigation();
         }
 
@@ -202,7 +256,9 @@ function generateQuestionnaireHTML() {
         }
 
         function goBack() {
-          if (currentQuestion === 4) {
+          if (currentQuestion === 5) {
+            showTrainingOptionsForAcademy(); // Go back to training options for academy
+          } else if (currentQuestion === 4) {
             showQuestion3ForOlder(); // Go back to Question 3 (Age Question for older players)
           } else if (currentQuestion === 3) {
             if (lastAnswer === 'Yes' || lastAnswer === 'No') {
