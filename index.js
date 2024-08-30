@@ -61,14 +61,13 @@ function generateQuestionnaireHTML() {
           currentQuestion = 2; // Move to question 2
 
           if (answer === 'Yes') {
-            showQuestion2();
+            showQuestion2YesPath();
           } else if (answer === 'No') {
-            document.getElementById('question-container').innerHTML = '<p>Options for non-players in 2024 will be displayed here.</p>';
-            showNavigation();
+            showQuestion2NoPath();
           }
         }
 
-        function showQuestion2() {
+        function showQuestion2YesPath() {
           currentQuestion = 2; // Set current question to 2
           const questionContainer = document.getElementById('question-container');
           questionContainer.innerHTML = \`
@@ -81,6 +80,35 @@ function generateQuestionnaireHTML() {
               </div>
             </div>
           \`;
+          showNavigation();
+        }
+
+        function showQuestion2NoPath() {
+          currentQuestion = 2; // Set current question to 2
+          const questionContainer = document.getElementById('question-container');
+          questionContainer.innerHTML = \`
+            <div class="question">
+              <h3>Did you attend NWS (winter) Academy in 2024?</h3>
+              <div class="options">
+                <button onclick="handleNWSAcademyAnswer('Yes')">Yes</button>
+                <button onclick="handleNWSAcademyAnswer('No')">No</button>
+              </div>
+            </div>
+          \`;
+          showNavigation();
+        }
+
+        function handleNWSAcademyAnswer(answer) {
+          lastAnswer = answer;
+          currentQuestion = 3; // Move to next logical step
+          const questionContainer = document.getElementById('question-container');
+
+          if (answer === 'Yes') {
+            questionContainer.innerHTML = '<p>Options for those who attended the NWS (winter) Academy will be displayed here.</p>';
+          } else {
+            questionContainer.innerHTML = '<p>Options for those who did NOT attend the NWS (winter) Academy will be displayed here.</p>';
+          }
+
           showNavigation();
         }
 
@@ -136,7 +164,11 @@ function generateQuestionnaireHTML() {
 
         function goBack() {
           if (currentQuestion === 3) {
-            showQuestion2(); // Go back to Question 2
+            if (lastAnswer === 'Yes' || lastAnswer === 'No') {
+              showQuestion2NoPath(); // Go back to Question 2 No Path
+            } else {
+              showQuestion2YesPath(); // Go back to Question 2 Yes Path
+            }
           } else if (currentQuestion === 2) {
             showQuestion1(); // Go back to Question 1
           }
