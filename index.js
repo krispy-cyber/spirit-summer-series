@@ -88,7 +88,32 @@ function generateQuestionnaireHTML() {
           const questionContainer = document.getElementById('question-container');
           questionContainer.innerHTML = \`
             <div class="question">
-              <h3>Did you attend NWS (winter) Academy in 2024?</h3>
+              <h3>Is your player currently 8 years of age or older?</h3>
+              <div class="options">
+                <button onclick="handleAgeQuestion('Yes')">Yes</button>
+                <button onclick="handleAgeQuestion('No')">No</button>
+              </div>
+            </div>
+          \`;
+          showNavigation();
+        }
+
+        function handleAgeQuestion(answer) {
+          lastAnswer = answer;
+          currentQuestion = 3; // Move to question 3
+          if (answer === 'Yes') {
+            showQuestion3ForOlder();
+          } else if (answer === 'No') {
+            showPreAcademyOption();
+          }
+        }
+
+        function showQuestion3ForOlder() {
+          currentQuestion = 3; // Set current question to 3
+          const questionContainer = document.getElementById('question-container');
+          questionContainer.innerHTML = \`
+            <div class="question">
+              <h3>Did you attend NWS Academy in winter this year?</h3>
               <div class="options">
                 <button onclick="handleNWSAcademyAnswer('Yes')">Yes</button>
                 <button onclick="handleNWSAcademyAnswer('No')">No</button>
@@ -100,7 +125,7 @@ function generateQuestionnaireHTML() {
 
         function handleNWSAcademyAnswer(answer) {
           lastAnswer = answer;
-          currentQuestion = 3; // Move to next logical step
+          currentQuestion = 4; // Set current question to 4
           const questionContainer = document.getElementById('question-container');
 
           if (answer === 'Yes') {
@@ -109,6 +134,20 @@ function generateQuestionnaireHTML() {
             questionContainer.innerHTML = '<p>Options for those who did NOT attend the NWS (winter) Academy will be displayed here.</p>';
           }
 
+          showNavigation();
+        }
+
+        function showPreAcademyOption() {
+          currentQuestion = 3; // Set current question to 3
+          const questionContainer = document.getElementById('question-container');
+          questionContainer.innerHTML = \`
+            <div class="question"><h3>NWSF Summer Pre-Academy Option:</h3></div>
+            <div class="options">
+              <a href="https://shop.nwsf.com.au/product/nwsf-summer-pre-academy/59?cp=true&sa=false&sbp=false&q=false&category_id=10">
+                <button>NWSF Summer Pre-Academy</button>
+              </a>
+            </div>
+          \`;
           showNavigation();
         }
 
@@ -163,7 +202,9 @@ function generateQuestionnaireHTML() {
         }
 
         function goBack() {
-          if (currentQuestion === 3) {
+          if (currentQuestion === 4) {
+            showQuestion3ForOlder(); // Go back to Question 3 (Age Question for older players)
+          } else if (currentQuestion === 3) {
             if (lastAnswer === 'Yes' || lastAnswer === 'No') {
               showQuestion2NoPath(); // Go back to Question 2 No Path
             } else {
