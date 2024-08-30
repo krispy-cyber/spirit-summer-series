@@ -1,9 +1,9 @@
 {
-  "heading": "NWSF and Spirit Summer Series",
+  "heading": "NWSF and Spirit Summer Series Questionnaire",
   "questions": [
     {
       "id": "Q1",
-      "question": "Were you a NWSF AYL or Spirit FC player in 2024?",
+      "question": "Was your player in NWSF AYL or Spirit FC squads in 2024?",
       "options": [
         { "answer": "Yes", "next": "Q2a" },
         { "answer": "No", "next": "Q2b" }
@@ -11,7 +11,7 @@
     },
     {
       "id": "Q2a",
-      "question": "Do you want group training, personalized training, or both?",
+      "question": "Are you looking for group training, personalized training, or both?",
       "options": [
         { "answer": "Group Training", "next": "O1" },
         { "answer": "Personalized Training", "next": "O2" },
@@ -28,7 +28,7 @@
     },
     {
       "id": "Q3",
-      "question": "Did you attend NWS Academy in winter this year?",
+      "question": "Did your player attend NWS Academy in winter this year?",
       "options": [
         { "answer": "Yes", "next": "Q4" },
         { "answer": "No", "next": "Q5" }
@@ -36,7 +36,7 @@
     },
     {
       "id": "Q4",
-      "question": "Do you want group training, personalized training, or both?",
+      "question": "Are you looking for group training, personalized training, or both?",
       "options": [
         { "answer": "Group Training", "next": "O5" },
         { "answer": "Personalized Training", "next": "O6" },
@@ -45,7 +45,7 @@
     },
     {
       "id": "Q5",
-      "question": "Choose your preferred option:",
+      "question": "Choose preferred option:",
       "options": [
         { "answer": "Group Training (NWSF Summer Academy)", "next": "O8" },
         { "answer": "NWSF Summer Academy with additional personalised sessions", "next": "O9" }
