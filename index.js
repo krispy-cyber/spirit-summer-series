@@ -131,8 +131,7 @@ function generateQuestionnaireHTML() {
           if (answer === 'Yes') {
             showTrainingOptionsForAcademy();
           } else {
-            questionContainer.innerHTML = '<p>Options for those who did NOT attend the NWS (winter) Academy will be displayed here.</p>';
-            showNavigation();
+            showNonAcademyOptions();
           }
         }
 
@@ -146,6 +145,25 @@ function generateQuestionnaireHTML() {
                 <button onclick="showAcademyOption('Group Training')">Group Training</button>
                 <button onclick="showAcademyOption('Personalized Training')">Personalized Training</button>
                 <button onclick="showAcademyOption('Both')">Both</button>
+              </div>
+            </div>
+          \`;
+          showNavigation();
+        }
+
+        function showNonAcademyOptions() {
+          currentQuestion = 4; // Set current question to 4
+          const questionContainer = document.getElementById('question-container');
+          questionContainer.innerHTML = \`
+            <div class="question">
+              <h3>Choose your preferred option:</h3>
+              <div class="options">
+                <a href="https://shop.nwsf.com.au/product/nwsf-summer-academy/54?cp=true&sa=false&sbp=false&q=false&category_id=10">
+                  <button>Group Training (NWSF Summer Academy)</button>
+                </a>
+                <a href="#">
+                  <button>Group Training with additional 1:1 coaching (Link Pending)</button>
+                </a>
               </div>
             </div>
           \`;
