@@ -88,7 +88,7 @@ function generateQuestionnaireHTML(data) {
         .heading { font-size: 24px; font-weight: bold; color: #000000; }
         .question { margin-bottom: 20px; }
         .options { margin-top: 10px; }
-        .options button { margin-right: 10px; padding: 10px 20px; background-color: #FFEB00; color: #000000; border: none; border-radius: 5px; cursor: pointer; }
+        .options button { margin-bottom: 10px; margin-right: 10px; padding: 10px 20px; background-color: #FFEB00; color: #000000; border: none; border-radius: 5px; cursor: pointer; }
         .options a { text-decoration: none; }
         .navigation { margin-top: 20px; }
         .navigation button { background-color: #FFEB00; color: #000000; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
