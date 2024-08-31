@@ -2,37 +2,16 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
-    if (url.pathname === '/') {
-      // Fetch the JSON file from R2 using the bucket binding
-      const object = await env.BUCKET.get('questions.json');
-      if (!object) {
-        console.error('Questions JSON not found in R2 bucket.');
-        return new Response('Error: Questions file not found in R2 bucket.', { status: 404 });
-      }
-
-      const questionnaireData = await object.json();
-      return new Response(generateQuestionnaireHTML(questionnaireData), {
-        headers: { 'Content-Type': 'text/html' },
-      });
-    } 
-    // Handle requests for summer-series-logo.jpeg
-    else if (url.pathname === '/summer-series-logo.jpeg') {
-      return fetchImageFromR2(env, 'summer-series-logo.jpeg', 'image/jpeg');
-    } 
-    // Handle requests for additional info HTML pages
-    else if (url.pathname.startsWith('/info/')) {
-      const infoFile = url.pathname.replace('/info/', '');
-      return fetchInfoPageFromR2(env, infoFile);
+    if (url.pathname.startsWith('/images/')) {
+      const imageKey = url.pathname.replace('/images/', '');
+      return fetchImageFromR2(env, imageKey);  // Adjust content type dynamically
     }
-    // Fallback for any other path
-    else {
-      return new Response('Not found', { status: 404 });
-    }
-  },
+    // Other routes...
+  }
 };
 
-// Helper function to fetch image from R2 and return the response
-async function fetchImageFromR2(env, key, contentType) {
+// Function to fetch image from R2 and return the response with dynamic content type
+async function fetchImageFromR2(env, key) {
   try {
     const imageObject = await env.BUCKET.get(key);
     if (!imageObject) {
@@ -40,12 +19,37 @@ async function fetchImageFromR2(env, key, contentType) {
       return new Response(`Error: Image "${key}" file not found in R2 bucket.`, { status: 404 });
     }
 
+    // Determine the content type based on file extension
+    const contentType = getContentType(key);
+
     return new Response(imageObject.body, {
       headers: { 'Content-Type': contentType },
     });
   } catch (error) {
     console.error(`Error fetching image "${key}" from R2:`, error);
     return new Response(`Error fetching image "${key}" from R2 bucket.`, { status: 522 });
+  }
+}
+
+// Helper function to determine the content type based on file extension
+function getContentType(filename) {
+  const extension = filename.split('.').pop().toLowerCase();  // Get the file extension
+  switch (extension) {
+    case 'jpeg':
+    case 'jpg':
+      return 'image/jpeg';
+    case 'png':
+      return 'image/png';
+    case 'gif':
+      return 'image/gif';
+    case 'webp':
+      return 'image/webp';
+    case 'svg':
+      return 'image/svg+xml';
+    case 'bmp':
+      return 'image/bmp';
+    default:
+      return 'application/octet-stream';  // Fallback for unknown types
   }
 }
 
